@@ -35,4 +35,40 @@ The update script refreshes `bucket/*.json` files from each manifest's `checkver
 - `fixed-url`
 - `html-regex`
 
+## Multi-Architecture Manifests
+
+Use `architectures` for packages that publish different DEB files per CPU architecture:
+
+```json
+{
+  "id": "example",
+  "version": "1.0.0",
+  "architectures": {
+    "amd64": {
+      "url": "https://example.com/example_1.0.0_amd64.deb",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://example.com/example_1.0.0_arm64.deb",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "owner/example",
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": "example_[0-9.]+_amd64\\.deb$"
+      },
+      "arm64": {
+        "assetPattern": "example_[0-9.]+_arm64\\.deb$"
+      }
+    }
+  }
+}
+```
+
+Spork clients select the configured architecture during `spork update`. Repository automation updates each configured architecture in place.
+
 GitHub Actions runs the script on a schedule and commits manifest changes. Local `spork update` only pulls the repository and reads JSON.

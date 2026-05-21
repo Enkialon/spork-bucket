@@ -74,6 +74,28 @@ def update_app(manifest: dict[str, Any], version: str, url: str) -> dict[str, An
     return updated
 
 
+def update_multi_arch_app(manifest: dict[str, Any], resolved: dict[str, tuple[str, str]]) -> dict[str, Any]:
+    updated = dict(manifest)
+    existing = manifest.get("architectures")
+    architectures = dict(existing) if isinstance(existing, dict) else {}
+    versions = []
+    for arch, (version, url) in resolved.items():
+        current = architectures.get(arch)
+        variant = dict(current) if isinstance(current, dict) else {}
+        variant["url"] = url
+        variant.setdefault("sha256", None)
+        architectures[arch] = variant
+        versions.append(version)
+    unique_versions = sorted(set(versions))
+    updated["version"] = unique_versions[0] if len(unique_versions) == 1 else ",".join(unique_versions)
+    updated["architectures"] = architectures
+    updated.pop("arch", None)
+    updated.pop("url", None)
+    updated.pop("sha256", None)
+    updated["updatedAt"] = now_iso()
+    return updated
+
+
 def require_string(data: dict[str, Any], key: str) -> str:
     value = data.get(key)
     if not isinstance(value, str) or not value:
@@ -81,8 +103,7 @@ def require_string(data: dict[str, Any], key: str) -> str:
     return value
 
 
-def resolve_github_release(manifest: dict[str, Any], token: str | None) -> dict[str, Any]:
-    source = manifest["checkver"]
+def resolve_github_release_source(source: dict[str, Any], token: str | None, app_id: str) -> tuple[str, str]:
     repo = require_string(source, "repo")
     release = fetch_json(f"https://api.github.com/repos/{repo}/releases/latest", token)
     tag = str(release.get("tag_name") or "")
@@ -95,12 +116,16 @@ def resolve_github_release(manifest: dict[str, Any], token: str | None) -> dict[
             continue
         name = str(asset.get("name") or "")
         if asset_pattern.search(name):
-            return update_app(manifest, version, require_string(asset, "browser_download_url"))
-    raise ValueError(f"no matching release asset for {manifest['id']}")
+            return version, require_string(asset, "browser_download_url")
+    raise ValueError(f"no matching release asset for {app_id}")
 
 
-def resolve_fixed_url(manifest: dict[str, Any]) -> dict[str, Any]:
-    source = manifest["checkver"]
+def resolve_github_release(manifest: dict[str, Any], token: str | None) -> dict[str, Any]:
+    version, url = resolve_github_release_source(manifest["checkver"], token, manifest["id"])
+    return update_app(manifest, version, url)
+
+
+def resolve_fixed_url_source(source: dict[str, Any]) -> tuple[str, str]:
     url = require_string(source, "url")
     version = source.get("version")
     version_regex = source.get("versionRegex")
@@ -108,28 +133,76 @@ def resolve_fixed_url(manifest: dict[str, Any]) -> dict[str, Any]:
         match = re.search(version_regex, url)
         if match:
             version = match.group(1) if match.groups() else match.group(0)
-    return update_app(manifest, str(version or "unknown"), url)
+    return str(version or "unknown"), url
 
 
-def resolve_html_regex(manifest: dict[str, Any]) -> dict[str, Any]:
-    source = manifest["checkver"]
+def resolve_fixed_url(manifest: dict[str, Any]) -> dict[str, Any]:
+    version, url = resolve_fixed_url_source(manifest["checkver"])
+    return update_app(manifest, version, url)
+
+
+def resolve_html_regex_source(source: dict[str, Any], app_id: str) -> tuple[str, str]:
     page_url = require_string(source, "pageUrl")
     html = fetch_text(page_url)
     url_match = re.search(require_string(source, "urlRegex"), html)
-    if not url_match:
-        raise ValueError(f"no url matched for {manifest['id']}")
-    url = url_match.group(1) if url_match.groups() else url_match.group(0)
-    url = urllib.parse.urljoin(page_url, url)
+    if url_match:
+        url = url_match.group(1) if url_match.groups() else url_match.group(0)
+        url = urllib.parse.urljoin(page_url, url)
+    elif source.get("fallbackUrl"):
+        url = str(source["fallbackUrl"])
+    else:
+        raise ValueError(f"no url matched for {app_id}")
     version = "unknown"
     version_regex = source.get("versionRegex")
     if version_regex:
         match = re.search(version_regex, url) or re.search(version_regex, html)
         if match:
             version = match.group(1) if match.groups() else match.group(0)
+    return version, url
+
+
+def resolve_html_regex(manifest: dict[str, Any]) -> dict[str, Any]:
+    version, url = resolve_html_regex_source(manifest["checkver"], manifest["id"])
     return update_app(manifest, version, url)
 
 
+def resolve_source(source: dict[str, Any], token: str | None, app_id: str) -> tuple[str, str]:
+    source_type = source.get("type")
+    if source_type == "github-release":
+        return resolve_github_release_source(source, token, app_id)
+    if source_type == "fixed-url":
+        return resolve_fixed_url_source(source)
+    if source_type == "html-regex":
+        return resolve_html_regex_source(source, app_id)
+    raise ValueError(f"unsupported source type: {source_type}")
+
+
+def resolve_multi_arch_manifest(manifest: dict[str, Any], token: str | None) -> dict[str, Any] | None:
+    source = manifest.get("checkver")
+    if not isinstance(source, dict):
+        return None
+    source_architectures = source.get("architectures")
+    if not isinstance(source_architectures, dict):
+        return None
+    common_source = {key: value for key, value in source.items() if key != "architectures"}
+    resolved: dict[str, tuple[str, str]] = {}
+    for arch, arch_source in sorted(source_architectures.items()):
+        if isinstance(arch_source, str):
+            merged_source = dict(common_source)
+            merged_source["url"] = arch_source
+        elif isinstance(arch_source, dict):
+            merged_source = dict(common_source)
+            merged_source.update(arch_source)
+        else:
+            raise ValueError(f"invalid checkver architecture for {manifest['id']}: {arch}")
+        resolved[arch] = resolve_source(merged_source, token, manifest["id"])
+    return update_multi_arch_app(manifest, resolved)
+
+
 def resolve_manifest(manifest: dict[str, Any], token: str | None) -> dict[str, Any]:
+    multi_arch = resolve_multi_arch_manifest(manifest, token)
+    if multi_arch is not None:
+        return multi_arch
     source = manifest.get("checkver")
     if not isinstance(source, dict):
         raise ValueError(f"missing checkver for {manifest.get('id', '<unknown>')}")

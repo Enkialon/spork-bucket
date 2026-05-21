@@ -5,15 +5,36 @@
   "description": "A modern GUI client based on Tauri for Clash and Mihomo.",
   "package": "clash-verge",
   "version": "2.5.1",
-  "arch": "amd64",
-  "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.1/Clash.Verge_2.5.1_amd64.deb",
-  "sha256": null,
   "homepage": "https://github.com/clash-verge-rev/clash-verge-rev",
   "updatedAt": "2026-05-21T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.1/Clash.Verge_2.5.1_amd64.deb",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.1/Clash.Verge_2.5.1_arm64.deb",
+      "sha256": null
+    },
+    "armhf": {
+      "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.1/Clash.Verge_2.5.1_armhf.deb",
+      "sha256": null
+    }
+  },
   "checkver": {
     "type": "github-release",
     "repo": "clash-verge-rev/clash-verge-rev",
-    "assetPattern": "Clash\\.Verge_[0-9.]+_amd64\\.deb$",
-    "versionRegex": "^v?(.*)$"
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": "Clash\\.Verge_[0-9.]+_amd64\\.deb$"
+      },
+      "arm64": {
+        "assetPattern": "Clash\\.Verge_[0-9.]+_arm64\\.deb$"
+      },
+      "armhf": {
+        "assetPattern": "Clash\\.Verge_[0-9.]+_armhf\\.deb$"
+      }
+    }
   }
 }

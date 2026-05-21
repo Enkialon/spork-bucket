@@ -35,4 +35,40 @@ python3 scripts/update.py
 - `fixed-url`
 - `html-regex`
 
+## 多架构 Manifest
+
+如果软件按 CPU 架构发布不同 DEB 文件，使用 `architectures`：
+
+```json
+{
+  "id": "example",
+  "version": "1.0.0",
+  "architectures": {
+    "amd64": {
+      "url": "https://example.com/example_1.0.0_amd64.deb",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://example.com/example_1.0.0_arm64.deb",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "owner/example",
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": "example_[0-9.]+_amd64\\.deb$"
+      },
+      "arm64": {
+        "assetPattern": "example_[0-9.]+_arm64\\.deb$"
+      }
+    }
+  }
+}
+```
+
+Spork 客户端会在 `spork update` 时按配置架构选择对应构建。仓库自动化会逐架构更新这些 URL。
+
 GitHub Actions 会定时运行这个脚本，并在 manifest 变化时自动提交。本地 `spork update` 只拉取仓库并读取 JSON。
