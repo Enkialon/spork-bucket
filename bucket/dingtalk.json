@@ -11,16 +11,35 @@
     "amd64": {
       "url": "https://dtapp-pub.dingtalk.com/dingtalk-desktop/xc_dingtalk_update/linux_deb/Release/com.alibabainc.dingtalk_8.1.0.6021101_amd64.deb",
       "sha256": null
+    },
+    "arm64": {
+      "url": "https://dtapp-pub.dingtalk.com/dingtalk-desktop/xc_dingtalk_update/linux_deb/Release/com.alibabainc.dingtalk_8.1.0.6021101_arm64.deb",
+      "sha256": null
+    },
+    "mips64el": {
+      "url": "https://dtapp-pub.dingtalk.com/dingtalk-desktop/xc_dingtalk_update/linux_deb/Release/com.alibabainc.dingtalk_8.1.0.6021101_mips64el.deb",
+      "sha256": null
+    },
+    "loongarch64": {
+      "url": "https://dtapp-pub.dingtalk.com/dingtalk-desktop/xc_dingtalk_update/linux_deb/Release/com.alibabainc.dingtalk_8.1.0.6021101_loongarch64.deb",
+      "sha256": null
     }
   },
   "checkver": {
-    "type": "html-regex",
-    "pageUrl": "https://www.dingtalk.com/download",
-    "versionRegex": "com\\.alibabainc\\.dingtalk_([^_]+)_amd64\\.deb$",
+    "type": "redirect-url",
+    "versionRegex": "com\\.alibabainc\\.dingtalk_([^_]+)_[^_]+\\.deb$",
     "architectures": {
       "amd64": {
-        "urlRegex": "(https://dtapp-pub\\.dingtalk\\.com/dingtalk-desktop/[^\"'<> ]*linux_deb[^\"'<> ]*com\\.alibabainc\\.dingtalk_[^\"'<> ]+_amd64\\.deb)",
-        "fallbackUrl": "https://dtapp-pub.dingtalk.com/dingtalk-desktop/xc_dingtalk_update/linux_deb/Release/com.alibabainc.dingtalk_8.1.0.6021101_amd64.deb"
+        "url": "https://www.dingtalk.com/win/d/qd=linux_amd64"
+      },
+      "arm64": {
+        "url": "https://www.dingtalk.com/win/d/qd=linux_arm64"
+      },
+      "mips64el": {
+        "url": "https://www.dingtalk.com/win/d/qd=linux_mips64el"
+      },
+      "loongarch64": {
+        "url": "https://www.dingtalk.com/win/d/qd=linux_loongarch64"
       }
     }
   }

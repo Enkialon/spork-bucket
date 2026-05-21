@@ -33,6 +33,7 @@ python3 scripts/update.py
 
 - `github-release`
 - `fixed-url`
+- `redirect-url`
 - `html-regex`
 
 ## 多架构 Manifest
@@ -69,6 +70,6 @@ python3 scripts/update.py
 }
 ```
 
-Spork 客户端会在 `spork update` 时按配置架构选择对应构建。仓库自动化会逐架构更新这些 URL。
+Spork 客户端会在 `spork update` 时按配置架构选择对应构建。仓库自动化会逐架构更新这些 URL。架构 key 使用 Debian 风格名称，例如 `amd64`、`arm64`、`mips64el`、`loongarch64`。
 
 GitHub Actions 会定时运行这个脚本，并在 manifest 变化时自动提交。本地 `spork update` 只拉取仓库并读取 JSON。

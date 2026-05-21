@@ -33,6 +33,7 @@ The update script refreshes `bucket/*.json` files from each manifest's `checkver
 
 - `github-release`
 - `fixed-url`
+- `redirect-url`
 - `html-regex`
 
 ## Multi-Architecture Manifests
@@ -69,6 +70,6 @@ Use `architectures` for packages that publish different DEB files per CPU archit
 }
 ```
 
-Spork clients select the configured architecture during `spork update`. Repository automation updates each configured architecture in place.
+Spork clients select the configured architecture during `spork update`. Repository automation updates each configured architecture in place. Architecture keys use Debian-style names such as `amd64`, `arm64`, `mips64el`, and `loongarch64`.
 
 GitHub Actions runs the script on a schedule and commits manifest changes. Local `spork update` only pulls the repository and reads JSON.

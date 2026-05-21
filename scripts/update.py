@@ -66,6 +66,18 @@ def fetch_text(url: str) -> str:
         return response.read().decode("utf-8", errors="replace")
 
 
+def fetch_final_url(url: str) -> str:
+    headers = {"User-Agent": "spork-bucket"}
+    request = urllib.request.Request(url, headers=headers, method="HEAD")
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            return response.geturl()
+    except Exception:
+        request = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(request, timeout=60) as response:
+            return response.geturl()
+
+
 def update_app(manifest: dict[str, Any], version: str, url: str) -> dict[str, Any]:
     updated = dict(manifest)
     updated["version"] = version
@@ -141,6 +153,22 @@ def resolve_fixed_url(manifest: dict[str, Any]) -> dict[str, Any]:
     return update_app(manifest, version, url)
 
 
+def resolve_redirect_url_source(source: dict[str, Any]) -> tuple[str, str]:
+    url = fetch_final_url(require_string(source, "url"))
+    version = source.get("version")
+    version_regex = source.get("versionRegex")
+    if version_regex:
+        match = re.search(version_regex, url)
+        if match:
+            version = match.group(1) if match.groups() else match.group(0)
+    return str(version or "unknown"), url
+
+
+def resolve_redirect_url(manifest: dict[str, Any]) -> dict[str, Any]:
+    version, url = resolve_redirect_url_source(manifest["checkver"])
+    return update_app(manifest, version, url)
+
+
 def resolve_html_regex_source(source: dict[str, Any], app_id: str) -> tuple[str, str]:
     page_url = require_string(source, "pageUrl")
     html = fetch_text(page_url)
@@ -172,6 +200,8 @@ def resolve_source(source: dict[str, Any], token: str | None, app_id: str) -> tu
         return resolve_github_release_source(source, token, app_id)
     if source_type == "fixed-url":
         return resolve_fixed_url_source(source)
+    if source_type == "redirect-url":
+        return resolve_redirect_url_source(source)
     if source_type == "html-regex":
         return resolve_html_regex_source(source, app_id)
     raise ValueError(f"unsupported source type: {source_type}")
@@ -211,6 +241,8 @@ def resolve_manifest(manifest: dict[str, Any], token: str | None) -> dict[str, A
         return resolve_github_release(manifest, token)
     if source_type == "fixed-url":
         return resolve_fixed_url(manifest)
+    if source_type == "redirect-url":
+        return resolve_redirect_url(manifest)
     if source_type == "html-regex":
         return resolve_html_regex(manifest)
     raise ValueError(f"unsupported source type: {source_type}")
