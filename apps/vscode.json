@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "code",
+  "name": "Visual Studio Code",
+  "description": "Code editing. Redefined.",
+  "package": "code",
+  "arch": "amd64",
+  "homepage": "https://code.visualstudio.com/",
+  "source": {
+    "type": "fixed-url",
+    "url": "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64",
+    "version": "stable"
+  },
+  "install": {
+    "type": "deb"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "cursor",
+  "name": "Cursor",
+  "description": "AI code editor.",
+  "package": "cursor",
+  "arch": "amd64",
+  "homepage": "https://cursor.com/",
+  "source": {
+    "type": "fixed-url",
+    "url": "https://downloads.cursor.com/production/client/linux/x64/deb",
+    "version": "stable"
+  },
+  "install": {
+    "type": "deb"
+  }
+}

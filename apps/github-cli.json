@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "gh",
+  "name": "GitHub CLI",
+  "description": "GitHub's official command line tool.",
+  "package": "gh",
+  "arch": "amd64",
+  "homepage": "https://cli.github.com/",
+  "source": {
+    "type": "github-release",
+    "repo": "cli/cli",
+    "assetPattern": "gh_[0-9.]+_linux_amd64\\.deb$",
+    "versionRegex": "^v?(.*)$"
+  },
+  "install": {
+    "type": "deb"
+  }
+}

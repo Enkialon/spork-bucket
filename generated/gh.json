@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "gh",
+  "name": "GitHub CLI",
+  "description": "GitHub's official command line tool.",
+  "package": "gh",
+  "version": "2.92.0",
+  "arch": "amd64",
+  "url": "https://github.com/cli/cli/releases/download/v2.92.0/gh_2.92.0_linux_amd64.deb",
+  "sha256": null,
+  "homepage": "https://cli.github.com/",
+  "updatedAt": "2026-05-21T04:30:26Z"
+}
