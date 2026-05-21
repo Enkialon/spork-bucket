@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "tencent-meeting",
+  "name": "Tencent Meeting",
+  "description": "Tencent Meeting desktop client.",
+  "package": "wemeet",
+  "version": "3.26.10.401",
+  "arch": "amd64",
+  "url": "https://updatecdn.meeting.qq.com/cos/72e0e0023e1d1e6d4123fba28821aea1/TencentMeeting_0300000000_3.26.10.401_x86_64_default.publish.officialwebsite.deb",
+  "sha256": null,
+  "homepage": "https://meeting.tencent.com/download/",
+  "updatedAt": "2026-05-21T00:00:00Z",
+  "checkver": {
+    "type": "fixed-url",
+    "url": "https://updatecdn.meeting.qq.com/cos/72e0e0023e1d1e6d4123fba28821aea1/TencentMeeting_0300000000_3.26.10.401_x86_64_default.publish.officialwebsite.deb",
+    "versionRegex": "TencentMeeting_[0-9]+_([^_]+)_x86_64_.*\\.deb$"
+  }
+}

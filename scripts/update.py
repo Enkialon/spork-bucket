@@ -101,8 +101,14 @@ def resolve_github_release(manifest: dict[str, Any], token: str | None) -> dict[
 
 def resolve_fixed_url(manifest: dict[str, Any]) -> dict[str, Any]:
     source = manifest["checkver"]
-    version = source.get("version") or "unknown"
-    return update_app(manifest, str(version), require_string(source, "url"))
+    url = require_string(source, "url")
+    version = source.get("version")
+    version_regex = source.get("versionRegex")
+    if version_regex:
+        match = re.search(version_regex, url)
+        if match:
+            version = match.group(1) if match.groups() else match.group(0)
+    return update_app(manifest, str(version or "unknown"), url)
 
 
 def resolve_html_regex(manifest: dict[str, Any]) -> dict[str, Any]:

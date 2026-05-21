@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "clash-verge",
+  "name": "Clash Verge Rev",
+  "description": "A modern GUI client based on Tauri for Clash and Mihomo.",
+  "package": "clash-verge",
+  "version": "2.5.1",
+  "arch": "amd64",
+  "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.1/Clash.Verge_2.5.1_amd64.deb",
+  "sha256": null,
+  "homepage": "https://github.com/clash-verge-rev/clash-verge-rev",
+  "updatedAt": "2026-05-21T00:00:00Z",
+  "checkver": {
+    "type": "github-release",
+    "repo": "clash-verge-rev/clash-verge-rev",
+    "assetPattern": "Clash\\.Verge_[0-9.]+_amd64\\.deb$",
+    "versionRegex": "^v?(.*)$"
+  }
+}

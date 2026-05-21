@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "dingtalk",
+  "name": "DingTalk",
+  "description": "DingTalk desktop client.",
+  "package": "com.alibabainc.dingtalk",
+  "version": "8.1.0.6021101",
+  "arch": "amd64",
+  "url": "https://dtapp-pub.dingtalk.com/dingtalk-desktop/xc_dingtalk_update/linux_deb/Release/com.alibabainc.dingtalk_8.1.0.6021101_amd64.deb",
+  "sha256": null,
+  "homepage": "https://www.dingtalk.com/download",
+  "updatedAt": "2026-05-21T00:00:00Z",
+  "checkver": {
+    "type": "fixed-url",
+    "url": "https://dtapp-pub.dingtalk.com/dingtalk-desktop/xc_dingtalk_update/linux_deb/Release/com.alibabainc.dingtalk_8.1.0.6021101_amd64.deb",
+    "versionRegex": "com\\.alibabainc\\.dingtalk_([^_]+)_amd64\\.deb$"
+  }
+}
