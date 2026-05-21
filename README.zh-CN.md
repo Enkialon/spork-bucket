@@ -1,8 +1,10 @@
 # Spork Bucket
 
-这个仓库是 Spork 的下载 bucket，用来维护 Linux 第三方软件包的 manifest。
+这个仓库是 Spork 默认下载 bucket，用来维护 Linux 第三方 DEB 软件包的 manifest。
 
-Spork 直接读取 `bucket/*.json` 里的软件元数据。`scripts/update.py` 只是仓库自动化使用的辅助脚本，Spork 客户端不会执行它。
+它为 Spork 这个受 Scoop Windows 包管理器工作流启发的 Linux 包管理工具提供 bucket manifest。Spork 直接读取 `bucket/*.json` 里的软件元数据。`scripts/update.py` 只是仓库自动化使用的辅助脚本，Spork 客户端不会执行它。
+
+关键词：Spork bucket、DEB package manifests、Linux package manager bucket、apt package downloads、dpkg package metadata、Scoop-style bucket。
 
 ## 使用
 

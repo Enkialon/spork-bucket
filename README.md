@@ -1,8 +1,10 @@
 # Spork Bucket
 
-This repository is a Spork bucket for downloadable Linux packages.
+This repository is the default Spork bucket for downloadable Linux DEB packages.
 
-Spork reads package metadata directly from `bucket/*.json`. The optional `scripts/update.py` helper is only for repository automation and is not run by Spork clients.
+It contains bucket manifests for Spork, a Scoop-style Linux package manager inspired by the Scoop Windows package manager workflow. Spork reads package metadata directly from `bucket/*.json`. The optional `scripts/update.py` helper is only for repository automation and is not run by Spork clients.
+
+Keywords: Spork bucket, DEB package manifests, Linux package manager bucket, apt package downloads, dpkg package metadata, Scoop-style bucket.
 
 ## Use
 
