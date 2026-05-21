@@ -1,4 +1,4 @@
-name: Update generated manifests
+name: Update bucket manifests
 
 on:
   workflow_dispatch:
@@ -25,12 +25,12 @@ jobs:
 
       - name: Commit changes
         run: |
-          if git diff --quiet -- bucket.json generated; then
-            echo "No generated manifest changes."
+          if git diff --quiet -- bucket.json bucket; then
+            echo "No manifest changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add bucket.json generated
-          git commit -m "Update generated manifests"
+          git add bucket.json bucket
+          git commit -m "Update bucket manifests"
           git push

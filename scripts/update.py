@@ -10,8 +10,7 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
-APPS_DIR = ROOT / "apps"
-GENERATED_DIR = ROOT / "generated"
+BUCKET_DIR = ROOT / "bucket"
 BUCKET_FILE = ROOT / "bucket.json"
 
 
@@ -67,20 +66,12 @@ def fetch_text(url: str) -> str:
         return response.read().decode("utf-8", errors="replace")
 
 
-def base_app(manifest: dict[str, Any], version: str, url: str) -> dict[str, Any]:
-    return {
-        "schemaVersion": 1,
-        "id": require_string(manifest, "id"),
-        "name": require_string(manifest, "name"),
-        "description": manifest.get("description"),
-        "package": require_string(manifest, "package"),
-        "version": version,
-        "arch": manifest.get("arch", "amd64"),
-        "url": url,
-        "sha256": manifest.get("sha256"),
-        "homepage": manifest.get("homepage"),
-        "updatedAt": now_iso(),
-    }
+def update_app(manifest: dict[str, Any], version: str, url: str) -> dict[str, Any]:
+    updated = dict(manifest)
+    updated["version"] = version
+    updated["url"] = url
+    updated["updatedAt"] = now_iso()
+    return updated
 
 
 def require_string(data: dict[str, Any], key: str) -> str:
@@ -91,7 +82,7 @@ def require_string(data: dict[str, Any], key: str) -> str:
 
 
 def resolve_github_release(manifest: dict[str, Any], token: str | None) -> dict[str, Any]:
-    source = manifest["source"]
+    source = manifest["checkver"]
     repo = require_string(source, "repo")
     release = fetch_json(f"https://api.github.com/repos/{repo}/releases/latest", token)
     tag = str(release.get("tag_name") or "")
@@ -104,18 +95,18 @@ def resolve_github_release(manifest: dict[str, Any], token: str | None) -> dict[
             continue
         name = str(asset.get("name") or "")
         if asset_pattern.search(name):
-            return base_app(manifest, version, require_string(asset, "browser_download_url"))
+            return update_app(manifest, version, require_string(asset, "browser_download_url"))
     raise ValueError(f"no matching release asset for {manifest['id']}")
 
 
 def resolve_fixed_url(manifest: dict[str, Any]) -> dict[str, Any]:
-    source = manifest["source"]
+    source = manifest["checkver"]
     version = source.get("version") or "unknown"
-    return base_app(manifest, str(version), require_string(source, "url"))
+    return update_app(manifest, str(version), require_string(source, "url"))
 
 
 def resolve_html_regex(manifest: dict[str, Any]) -> dict[str, Any]:
-    source = manifest["source"]
+    source = manifest["checkver"]
     page_url = require_string(source, "pageUrl")
     html = fetch_text(page_url)
     url_match = re.search(require_string(source, "urlRegex"), html)
@@ -129,13 +120,13 @@ def resolve_html_regex(manifest: dict[str, Any]) -> dict[str, Any]:
         match = re.search(version_regex, url) or re.search(version_regex, html)
         if match:
             version = match.group(1) if match.groups() else match.group(0)
-    return base_app(manifest, version, url)
+    return update_app(manifest, version, url)
 
 
 def resolve_manifest(manifest: dict[str, Any], token: str | None) -> dict[str, Any]:
-    source = manifest.get("source")
+    source = manifest.get("checkver")
     if not isinstance(source, dict):
-        raise ValueError(f"missing source for {manifest.get('id', '<unknown>')}")
+        raise ValueError(f"missing checkver for {manifest.get('id', '<unknown>')}")
     source_type = source.get("type")
     if source_type == "github-release":
         return resolve_github_release(manifest, token)
@@ -155,29 +146,20 @@ def main() -> int:
     except Exception:
         token = None
 
-    GENERATED_DIR.mkdir(parents=True, exist_ok=True)
     failures = []
-    generated_ids = set()
     changed = False
 
-    for path in sorted(APPS_DIR.glob("*.json")):
+    for path in sorted(BUCKET_DIR.glob("*.json")):
         try:
             manifest = read_json(path)
             app = resolve_manifest(manifest, token)
-            generated_ids.add(app["id"])
-            app_path = GENERATED_DIR / f"{app['id']}.json"
-            if write_app_if_changed(app_path, app):
+            if write_app_if_changed(path, app):
                 changed = True
                 print(f"updated {app['id']} {app['version']}")
             else:
                 print(f"unchanged {app['id']} {app['version']}")
         except Exception as exc:
             failures.append(f"{path.name}: {exc}")
-
-    for path in GENERATED_DIR.glob("*.json"):
-        if path.stem not in generated_ids:
-            path.unlink()
-            changed = True
 
     if changed and BUCKET_FILE.exists():
         bucket = read_json(BUCKET_FILE)

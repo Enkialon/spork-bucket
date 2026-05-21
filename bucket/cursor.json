@@ -4,14 +4,15 @@
   "name": "Cursor",
   "description": "AI code editor.",
   "package": "cursor",
+  "version": "stable",
   "arch": "amd64",
+  "url": "https://downloads.cursor.com/production/client/linux/x64/deb",
+  "sha256": null,
   "homepage": "https://cursor.com/",
-  "source": {
+  "updatedAt": "2026-05-21T04:30:25Z",
+  "checkver": {
     "type": "fixed-url",
     "url": "https://downloads.cursor.com/production/client/linux/x64/deb",
     "version": "stable"
-  },
-  "install": {
-    "type": "deb"
   }
 }

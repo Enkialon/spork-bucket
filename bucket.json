@@ -3,7 +3,6 @@
   "name": "main",
   "description": "Community-maintained Spork bucket for downloadable Linux packages.",
   "homepage": "https://github.com/Enkialon/spork-bucket",
-  "generatedDir": "generated",
-  "appsDir": "apps",
+  "bucketDir": "bucket",
   "updatedAt": "2026-05-21T04:30:26Z"
 }

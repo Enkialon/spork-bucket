@@ -2,7 +2,7 @@
 
 This repository is a Spork bucket for downloadable Linux packages.
 
-Spork reads generated package metadata from `generated/*.json`. Source manifests live in `apps/*.json`, and `scripts/update.py` resolves the latest versions and download URLs.
+Spork reads package metadata directly from `bucket/*.json`. The optional `scripts/update.py` helper is only for repository automation and is not run by Spork clients.
 
 ## Use
 
@@ -16,9 +16,8 @@ spork download code
 ## Layout
 
 ```text
-apps/                 # editable source manifests
-generated/            # generated index files consumed by Spork
-scripts/update.py     # updates generated metadata
+bucket/               # app manifests consumed by Spork
+scripts/update.py     # repository automation for checkver fields
 bucket.json           # bucket metadata
 ```
 
@@ -28,10 +27,10 @@ bucket.json           # bucket metadata
 python3 scripts/update.py
 ```
 
-The update script supports these source types:
+The update script refreshes `bucket/*.json` files from each manifest's `checkver` block. It supports these source types:
 
 - `github-release`
 - `fixed-url`
 - `html-regex`
 
-GitHub Actions runs the same script on a schedule and commits any generated metadata changes.
+GitHub Actions runs the script on a schedule and commits manifest changes. Local `spork update` only pulls the repository and reads JSON.
