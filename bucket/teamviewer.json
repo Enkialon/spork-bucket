@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "teamviewer",
+  "name": "TeamViewer",
+  "description": "Remote access and support client.",
+  "package": "teamviewer",
+  "version": "unknown",
+  "homepage": "https://www.teamviewer.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://www.teamviewer.com/en/download/linux/",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://www.teamviewer.com/en/download/linux/",
+    "versionRegex": "teamviewer_([^_]+)_amd64\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(https?://[^\"'<> ]*teamviewer[^\"'<> ]*_amd64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "tabby",
+  "name": "Tabby Terminal",
+  "description": "Terminal emulator and SSH client.",
+  "package": "tabby-terminal",
+  "version": "unknown",
+  "homepage": "https://tabby.sh/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://github.com/Eugeny/tabby/releases",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://github.com/Eugeny/tabby/releases",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "Eugeny/tabby",
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": ".*(?:linux|amd64|x64|x86_64).*\\.deb$"
+      },
+      "arm64": {
+        "assetPattern": ".*(?:linux|arm64|aarch64).*\\.deb$"
+      }
+    }
+  }
+}

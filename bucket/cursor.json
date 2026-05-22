@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "cursor",
+  "name": "Cursor",
+  "description": "AI code editor.",
+  "package": "cursor",
+  "version": "unknown",
+  "homepage": "https://cursor.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://cursor.com/download",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://cursor.com/download",
+    "versionRegex": "cursor[_-]([0-9][^_/\"'<> ]*)",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(https?://[^\"'<> ]*(?:x64|amd64)[^\"'<> ]*\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      },
+      "arm64": {
+        "urlRegex": "(https?://[^\"'<> ]*(?:arm64|aarch64)[^\"'<> ]*\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

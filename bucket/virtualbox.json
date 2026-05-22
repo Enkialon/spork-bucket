@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "virtualbox",
+  "name": "VirtualBox",
+  "description": "General-purpose full virtualizer.",
+  "package": "virtualbox",
+  "version": "unknown",
+  "homepage": "https://www.virtualbox.org/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://www.virtualbox.org/wiki/Linux_Downloads",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://www.virtualbox.org/wiki/Linux_Downloads",
+    "versionRegex": "virtualbox-([0-9][^_/\"'<> ]*)-[^\"'<> ]*Ubuntu[^\"'<> ]*_amd64\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(https?://download\\.virtualbox\\.org/virtualbox/[^\"'<> ]*/virtualbox-[^\"'<> ]*Ubuntu[^\"'<> ]*_amd64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

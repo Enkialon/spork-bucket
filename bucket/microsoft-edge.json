@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "microsoft-edge",
+  "name": "Microsoft Edge",
+  "description": "Microsoft Edge web browser.",
+  "package": "microsoft-edge-stable",
+  "version": "unknown",
+  "homepage": "https://www.microsoft.com/edge",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/",
+    "select": "max-version",
+    "versionRegex": "microsoft-edge-stable_([^_]+)_amd64\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(microsoft-edge-stable_[^\"'<> ]+_amd64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

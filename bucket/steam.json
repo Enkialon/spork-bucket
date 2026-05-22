@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "steam",
+  "name": "Steam",
+  "description": "Steam client.",
+  "package": "steam-launcher",
+  "version": "unknown",
+  "homepage": "https://store.steampowered.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://cdn.akamai.steamstatic.com/client/installer/steam.deb",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "fixed-url",
+    "versionStrategy": "dpkg-deb-control",
+    "sha256Strategy": "download",
+    "architectures": {
+      "amd64": {
+        "url": "https://cdn.akamai.steamstatic.com/client/installer/steam.deb"
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "fastfetch",
+  "name": "Fastfetch",
+  "description": "Fast system information tool.",
+  "package": "fastfetch",
+  "version": "unknown",
+  "homepage": "https://github.com/fastfetch-cli/fastfetch",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://github.com/fastfetch-cli/fastfetch/releases",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://github.com/fastfetch-cli/fastfetch/releases",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "fastfetch-cli/fastfetch",
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": ".*(?:amd64|x86_64).*\\.deb$"
+      },
+      "arm64": {
+        "assetPattern": ".*(?:aarch64|arm64).*\\.deb$"
+      }
+    }
+  }
+}

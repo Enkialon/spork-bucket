@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "vivaldi",
+  "name": "Vivaldi",
+  "description": "Vivaldi web browser.",
+  "package": "vivaldi-stable",
+  "version": "unknown",
+  "homepage": "https://vivaldi.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://vivaldi.com/download/",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://vivaldi.com/download/",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://vivaldi.com/download/",
+    "versionRegex": "vivaldi-stable_([^_]+)_[^_/]+\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(https?://[^\"'<> ]*vivaldi-stable[^\"'<> ]*_amd64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      },
+      "arm64": {
+        "urlRegex": "(https?://[^\"'<> ]*vivaldi-stable[^\"'<> ]*_arm64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

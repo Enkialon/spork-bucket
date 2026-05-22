@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "gitkraken",
+  "name": "GitKraken",
+  "description": "Git client.",
+  "package": "gitkraken",
+  "version": "unknown",
+  "homepage": "https://www.gitkraken.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://release.gitkraken.com/linux/gitkraken-amd64.deb",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "fixed-url",
+    "versionStrategy": "dpkg-deb-control",
+    "sha256Strategy": "download",
+    "architectures": {
+      "amd64": {
+        "url": "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "zoom",
+  "name": "Zoom",
+  "description": "Video conferencing client.",
+  "package": "zoom",
+  "version": "unknown",
+  "homepage": "https://zoom.us/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://zoom.us/download?os=linux",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://zoom.us/download?os=linux",
+    "versionRegex": "zoom_([^_]+)_amd64\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(https?://[^\"'<> ]*zoom_[^\"'<> ]*_amd64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "sublime-text",
+  "name": "Sublime Text",
+  "description": "Text editor for code, markup and prose.",
+  "package": "sublime-text",
+  "version": "unknown",
+  "homepage": "https://www.sublimetext.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://download.sublimetext.com/",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://download.sublimetext.com/",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://download.sublimetext.com/",
+    "versionRegex": "sublime-text_build-([0-9]+)_[^_/]+\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(sublime-text_build-[0-9]+_amd64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      },
+      "arm64": {
+        "urlRegex": "(sublime-text_build-[0-9]+_arm64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "obsidian",
+  "name": "Obsidian",
+  "description": "Private and flexible writing app.",
+  "package": "obsidian",
+  "version": "unknown",
+  "homepage": "https://obsidian.md/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://github.com/obsidianmd/obsidian-releases/releases",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "obsidianmd/obsidian-releases",
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": "Obsidian-.*\\.deb$"
+      }
+    }
+  }
+}

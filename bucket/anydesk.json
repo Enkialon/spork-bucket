@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "anydesk",
+  "name": "AnyDesk",
+  "description": "Remote desktop client.",
+  "package": "anydesk",
+  "version": "unknown",
+  "homepage": "https://anydesk.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://anydesk.com/en/downloads/linux",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://anydesk.com/en/downloads/linux",
+    "versionRegex": "anydesk_([^_]+)_amd64\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(https?://[^\"'<> ]*anydesk[^\"'<> ]*_amd64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

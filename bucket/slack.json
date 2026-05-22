@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "slack",
+  "name": "Slack",
+  "description": "Team communication and collaboration.",
+  "package": "slack-desktop",
+  "version": "unknown",
+  "homepage": "https://slack.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://slack.com/downloads/linux",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://slack.com/downloads/linux",
+    "versionRegex": "slack-desktop-([0-9][^_/\"'<> ]*)-amd64\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(https?://[^\"'<> ]*slack-desktop-[^\"'<> ]*-amd64\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "rustdesk",
+  "name": "RustDesk",
+  "description": "Remote desktop software.",
+  "package": "rustdesk",
+  "version": "unknown",
+  "homepage": "https://rustdesk.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://github.com/rustdesk/rustdesk/releases",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://github.com/rustdesk/rustdesk/releases",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "rustdesk/rustdesk",
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": ".*(?:x86_64|amd64).*\\.deb$"
+      },
+      "arm64": {
+        "assetPattern": ".*(?:aarch64|arm64).*\\.deb$"
+      }
+    }
+  }
+}

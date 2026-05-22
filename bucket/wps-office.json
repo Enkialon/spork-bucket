@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "wps-office",
+  "name": "WPS Office Linux",
+  "description": "WPS Office for Linux.",
+  "package": "wps-office",
+  "version": "unknown",
+  "homepage": "https://linux.wps.cn/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://linux.wps.cn/",
+      "sha256": null
+    },
+    "arm64": {
+      "url": "https://linux.wps.cn/",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "html-regex",
+    "pageUrl": "https://linux.wps.cn/",
+    "versionRegex": "wps-office_([^_]+)_[^_/]+\\.deb",
+    "architectures": {
+      "amd64": {
+        "urlRegex": "(https?://[^\"'<> ]*wps-office[^\"'<> ]*(?:amd64|x86_64)[^\"'<> ]*\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      },
+      "arm64": {
+        "urlRegex": "(https?://[^\"'<> ]*wps-office[^\"'<> ]*(?:arm64|aarch64)[^\"'<> ]*\\.deb)",
+        "versionStrategy": "dpkg-deb-control",
+        "sha256Strategy": "download"
+      }
+    }
+  }
+}

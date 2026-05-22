@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "bruno",
+  "name": "Bruno",
+  "description": "Open source API client.",
+  "package": "bruno",
+  "version": "unknown",
+  "homepage": "https://www.usebruno.com/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://github.com/usebruno/bruno/releases",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "usebruno/bruno",
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": ".*(?:amd64|x86_64).*\\.deb$"
+      }
+    }
+  }
+}

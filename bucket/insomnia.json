@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "insomnia",
+  "name": "Insomnia",
+  "description": "API design and testing client.",
+  "package": "insomnia",
+  "version": "unknown",
+  "homepage": "https://insomnia.rest/",
+  "updatedAt": "2026-05-22T00:00:00Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://github.com/Kong/insomnia/releases",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "Kong/insomnia",
+    "versionRegex": "^core@([0-9].*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": ".*\\.deb$"
+      }
+    }
+  }
+}
