@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "dust",
+  "name": "dust",
+  "description": "A more intuitive version of du in rust.",
+  "package": "du-dust",
+  "version": "1.2.4",
+  "homepage": "https://github.com/bootandy/dust",
+  "updatedAt": "2026-05-22T06:22:46Z",
+  "architectures": {
+    "amd64": {
+      "url": "https://github.com/bootandy/dust/releases/download/v1.2.4/du-dust_1.2.4-1_amd64.deb",
+      "sha256": null
+    },
+    "i386": {
+      "url": "https://github.com/bootandy/dust/releases/download/v1.2.4/du-dust_1.2.4-1_i386.deb",
+      "sha256": null
+    }
+  },
+  "checkver": {
+    "type": "github-release",
+    "repo": "bootandy/dust",
+    "versionRegex": "^v?(.*)$",
+    "architectures": {
+      "amd64": {
+        "assetPattern": "du-dust_[0-9.]+-[0-9]+_amd64\\.deb$"
+      },
+      "i386": {
+        "assetPattern": "du-dust_[0-9.]+-[0-9]+_i386\\.deb$"
+      }
+    }
+  }
+}
