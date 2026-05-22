@@ -9,7 +9,7 @@ Keywords: Spork bucket, DEB package manifests, Linux package manager bucket, apt
 ## Use
 
 ```bash
-spork bucket add main https://github.com/Enkialon/spork-bucket.git
+spork bucket add main https://github.com/spork-linux/spork-bucket.git
 spork update
 spork search code
 spork download code
